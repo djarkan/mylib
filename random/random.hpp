@@ -46,6 +46,5 @@ std::mt19937 Random<Type>::getUniformGenerator()
     return m_gen;
 
 }
-}
 
-std::uniform_real_distribution<> dis(1.0, 2.0);
+}
