@@ -4,26 +4,40 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include <array>
+#include <memory>
+
 namespace mylib
 {
 
-class BitmapFont
+ class BitmapFont
 {
     public :
-                                                BitmapFont();
-                                                BitmapFont(std::string fileName, unsigned int glyphWidth, unsigned int glyphHigth);
-        bool                                    setBitmapFont(std::string fileName, unsigned int glyphWidth, unsigned int glyphHigth);
-        void                                    setScale(float scale);
-        const sf::Sprite&                       getfontToDraw(char letter, sf::Vector2f coord);
-        void                                    setSmooth(bool on);
+                                                BitmapFont(unsigned int glyphWidth, unsigned int glyphHigth);
+        bool                                    loadTexture(const std::string fileName);
+        void                                    setTexture(const sf::Texture& texture);
+        void                                    setGlyphWidth(const char letter, const unsigned int glyphWidth);
+        unsigned int                            getGlyphWidth(const char letter) const;
+        unsigned int                            getGlyphHeight() const;
+        const sf::Vector2f&                     getTextureCoords(const char letter) const;
+        const sf::Texture*                      getTexture() const;
+
 
     private :
-        sf::Sprite                              m_letterSprite;
-        sf::Texture                             m_letterTexture;
+        struct                                  glyph
+        {
+            float                               width;
+            sf::Vector2f                        textureCoords;
+        };
+        sf::Texture                             m_internalTexture;
+        const sf::Texture*                      m_externalTexture;
+        bool                                    m_externalTextureUsed;
         unsigned int                            m_glyphWidth;
-        unsigned int                            m_glyphHigth;
-        float                                   m_scale;
+        unsigned int                            m_glyphHeight;
         unsigned int                            m_nbColunms;
+        std::array<glyph, 256>                  m_glyphs;
+
+        void                                    initGhyphs();
 };
 
 }
