@@ -3,9 +3,21 @@
 namespace mylib
 {
 
+BitmapFont::BitmapFont() : m_externalTextureUsed{false}
+{
+
+}
+
 BitmapFont::BitmapFont(unsigned int glyphWidth, unsigned int glyphHeight) : m_externalTextureUsed{false}, m_glyphWidth{glyphWidth}, m_glyphHeight{glyphHeight}
 {
 
+}
+
+void BitmapFont::setSize(unsigned int glyphWidth, unsigned int glyphHeight)
+{
+    m_glyphWidth = glyphWidth;
+    m_glyphHeight = glyphHeight;
+    initGhyphs();
 }
 
 void BitmapFont::initGhyphs()
@@ -24,7 +36,7 @@ void BitmapFont::initGhyphs()
 bool BitmapFont::loadTexture(const std::string fileName)
 {
     bool success = m_internalTexture.loadFromFile(fileName);
-    initGhyphs();
+    m_externalTextureUsed = false;
     return success;
 }
 
@@ -32,7 +44,6 @@ void BitmapFont::setTexture(const sf::Texture& texture)
 {
     m_externalTexture = &texture;
     m_externalTextureUsed = true;
-    initGhyphs();
 }
 
 void BitmapFont::setGlyphWidth(const char letter, const unsigned int glyphWidth)

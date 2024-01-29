@@ -13,7 +13,9 @@ namespace mylib
  class BitmapFont
 {
     public :
+                                                BitmapFont();                  // if used, setSize(unsigned int glyphWidth, unsigned int glyphHeight) MUST be called BEFORE setTexture or moadTexture //
                                                 BitmapFont(unsigned int glyphWidth, unsigned int glyphHigth);
+        void                                    setSize(unsigned int glyphWidth, unsigned int glyphHeight);
         bool                                    loadTexture(const std::string fileName);
         void                                    setTexture(const sf::Texture& texture);
         void                                    setGlyphWidth(const char letter, const unsigned int glyphWidth);
