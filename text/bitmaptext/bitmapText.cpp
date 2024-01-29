@@ -58,7 +58,7 @@ void BitmapText::setLineSpacing(float lineSpacing)
     updateVertices();
 }
 
-std::string BitmapText::getText() const
+std::string BitmapText::getText()
 {
     return m_text;
 }
@@ -109,6 +109,7 @@ void BitmapText::updateVertices()
         m_vertices.clear();
         return;
     }
+    m_vertices.clear();
     m_vertices.resize(m_text.size() * 4);
     unsigned int index{0};
     sf::Vector2f position(0, 0);
@@ -145,7 +146,7 @@ void BitmapText::updateVertices()
 void BitmapText::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if(m_font != nullptr) {
-        states.transform *= this->getTransform();
+        states.transform *= getTransform();
         states.texture = m_font->getTexture();
         target.draw(m_vertices, states);
     }

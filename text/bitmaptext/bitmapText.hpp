@@ -27,7 +27,7 @@ class BitmapText : public sf::Drawable, public sf::Transformable
         void                                    setFont(const mylib::BitmapFont* font);
         void                                    setLetterSpacing(float letterSpacing);
         void                                    setLineSpacing(float lineSpacing);
-        std::string                             getText() const;
+        std::string                             getText();
         float                                   getScale() const;
         sf::Color                               getColor() const;
         sf::FloatRect                           getLocalBounds() const;
