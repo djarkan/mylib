@@ -31,6 +31,7 @@ void TTFtext::setText(const std::string& text)
 void TTFtext::setColor(const sf::Color color)
 {
     m_text.setFillColor(color);
+    m_color = color;
 }
 
 void TTFtext::setOutlineColor(const sf::Color color)
@@ -59,7 +60,8 @@ void TTFtext::displayEnrichedText(float x, float y)
             }
             else { displayChar(x, y , m_fontSize, m_string[i]); }
         }
-        else {                                                                                                           // enter in a boudary
+        else {                                                                                                           // enter in a balise
+            unsigned int baliseStartIndex{i};
             ++i;
             char letter = m_string[i];
             bool addStyle;                                                                                               // add or remove text style
@@ -105,15 +107,13 @@ void TTFtext::displayEnrichedText(float x, float y)
                         displayChar(x, y , m_fontSize,m_string[i]);
                     }
                     else {
-                        displayChar(x, y , m_fontSize,m_string[i - 2]);
-                        displayChar(x, y , m_fontSize,m_string[i - 1]);
-                        displayChar(x, y , m_fontSize,m_string[i]);
+                       for(unsigned int j = baliseStartIndex; j <= i; ++j) { displayChar(x, y , m_fontSize,m_string[j]);  }
                     }
                 }
             }
             else {
                 if(letter == 's' or letter == 'c') {
-                    if((addStyle && m_string[i + 1] == ']') || m_string[i + 2] == ']' || m_string[i + 3] == ']' || m_string[i + 4] == ']' ) {
+                    if(addStyle && (m_string[i + 1] == ']' || m_string[i + 2] == ']' || m_string[i + 3] == ']' || m_string[i + 4] == ']' )) {
                         std::string numberSize{""};
                         ++i;
                         int offset{0};
@@ -139,9 +139,7 @@ void TTFtext::displayEnrichedText(float x, float y)
                             else { if(number <= 28 && number >= 0) { m_text.setFillColor(selectColor(number)); }}                      // color
                         }
                         else {
-                            displayChar(x, y , m_fontSize, m_string[i - 2]);
-                            displayChar(x, y , m_fontSize, m_string[i - 1]);
-                            displayChar(x, y , m_fontSize, m_string[i]);
+                           for(unsigned int j = baliseStartIndex; j <= i; ++j) { displayChar(x, y , m_fontSize,m_string[j]);  }
                         }
                     }
                     else {
@@ -154,9 +152,7 @@ void TTFtext::displayEnrichedText(float x, float y)
                             ++i;
                         }
                         else {
-                            displayChar(x, y , m_fontSize, m_string[i - 2]);
-                            displayChar(x, y , m_fontSize, m_string[i - 1]);
-                            displayChar(x, y , m_fontSize, m_string[i]);
+                            for(unsigned int j = baliseStartIndex; j <= i; ++j) { displayChar(x, y , m_fontSize,m_string[j]);  }
                         }
                     }
                 }

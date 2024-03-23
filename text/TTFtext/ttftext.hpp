@@ -32,12 +32,13 @@ class TTFtext
     public:
                                         TTFtext(sf::RenderWindow& window);
                                         TTFtext(const std::string& text, const std::string& fontName, unsigned int fontSize, sf::Color color, sf::RenderWindow& window);
-                 void                   setWindow(sf::RenderWindow& window);
+
                  bool                   setFont(const std::string& fontName);
                  void                   setText(const std::string& text);
                  void                   setColor(const sf::Color color);
                  void                   setOutlineColor(const sf::Color color);
                  void                   setCharacterSize(const unsigned int charSize);
+
                  void                   displayEnrichedText(float x, float y);
                  void                   displaySimpleText(const float x, const float y);
 
