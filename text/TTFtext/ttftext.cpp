@@ -205,6 +205,8 @@ void TTFtext::displayEnrichedText(float x, float y)
                         if(m_string[i + 1] == ']') {
                             if(letter == 's'){                                                                              // [/s]
                                 y = oldY;
+                                if(m_fontSize > firstCharSizeLine) { y -= (m_fontSize - firstCharSizeLine); }
+                                else { y += (firstCharSizeLine - m_fontSize);}
                                 m_text.setCharacterSize(m_fontSize);
                             }
                             else { m_text.setFillColor(convertEnumColorToSfmlColor(m_color)); }                                             // [/c]
