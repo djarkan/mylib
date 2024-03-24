@@ -1,9 +1,8 @@
-#ifndef TTFTEXT_H
-#define TTFTEXT_H
+#ifndef TTFTEST_H
+#define TTFTEST_H
 
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
                                                      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                      //                                                                                                                                             //
                                                      //                                                                                                                                             //
@@ -25,54 +24,55 @@
                                                      //                         LightGrey = 25, Grey = 26, DarkGrey = 27, White = 28                                                                //
                                                      //                                                                                                                                             //
                                                      //                                                                                                                                             //
-                                                     //                     note: all \n in text must be AFTER all next character's balises.
-                                                     //
+                                                     //                     note: all \n in text must be AFTER all next character's balises.                                                        //
+                                                     //                                                                                                                                             //
                                                      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace mylib {
 
-class TTFtext
+class TTFText
 {
     public:
-                enum class              TextColor { Black = 0, LightBrown = 1, Brown = 2, DarkBrown = 3, LightRed = 4, Red = 5, DarkRed = 6, LightPink = 7, Pink = 8, DarkPink = 9, LightOrange = 10, Orange = 11, DarkOrange = 12, LightYellow = 13, Yellow = 14,
-                                        DarkYellow = 15, LightBlue = 16, Blue = 17, DarkBlue = 18, LightGreen = 19, Green = 20, DarkGreen = 21, LightPurple = 22, Purple = 23, DarkPurple = 24, LightGrey = 25, Grey = 26, DarkGrey = 27, White = 28};
 
-                                        TTFtext(sf::RenderWindow& window);
-                                        TTFtext(const std::string& text, const std::string& fontName, unsigned int fontSize, TextColor color, sf::RenderWindow& window);
+         enum class                 TextColor { Black = 0, LightBrown = 1, Brown = 2, DarkBrown = 3, LightRed = 4, Red = 5, DarkRed = 6, LightPink = 7, Pink = 8, DarkPink = 9, LightOrange = 10, Orange = 11, DarkOrange = 12, LightYellow = 13, Yellow = 14,
+                                                DarkYellow = 15, LightBlue = 16, Blue = 17, DarkBlue = 18, LightGreen = 19, Green = 20, DarkGreen = 21, LightPurple = 22, Purple = 23, DarkPurple = 24, LightGrey = 25, Grey = 26, DarkGrey = 27, White = 28};
 
-                bool                    setFont(const std::string& fontName);
-                void                    setText(const std::string& text);
-                void                    setCharacterSize(const unsigned int charSize);
-                void                    setColor(const TextColor color);
-                void                    setOutlineColor(const TextColor color);
-                void                    setOutlineTickness(float thickness);
-                void                    setPosition(const float x, const float y);
-                void                    setPosition(const sf::Vector2f& coords);
+                                    TTFText(sf::RenderWindow& window);
+                                    TTFText(const std::string& text, const std::string& fontName, unsigned int fontSize, TextColor color, sf::RenderWindow& window);
 
-                const std::string&      getText() const;
-                unsigned int            getCharacterSize() const;
-                TextColor               getColor() const;
-                TextColor               getOutlineColor() const;
-                float                   getOutlineTickness() const;
-                const sf::Vector2f      getPosition() const;
+        bool                        setFont(const std::string& fontName);
+        void                        setText(const std::string& text);
+        void                        setCharacterSize(const unsigned int charSize);
+        void                        setColor(const TextColor color);
+        void                        setOutlineColor(const TextColor color);
+        void                        setOutlineTickness(float thickness);
+        void                        setPosition(const float x, const float y);
+        void                        setPosition(const sf::Vector2f& coords);
 
-                void                    displayEnrichedText(float x, float y);
-                void                    displayEnrichedText();
-                void                    displaySimpleText(const float x, const float y);
-                void                    displaySimpleText();
+        const std::string&          getText() const;
+        unsigned int                getCharacterSize() const;
+        TextColor                   getColor() const;
+        TextColor                   getOutlineColor() const;
+        float                       getOutlineTickness() const;
+        const sf::Vector2f          getPosition() const;
 
-    private :
-                std::string             m_string;
-                sf::Text                m_text;
-                sf::Font                m_font;
-                unsigned int            m_fontSize;
-                TextColor               m_color;
-                TextColor               m_outlineColor;
-                float                   m_outlineThickness;
-                sf::Vector2f            m_coords;
-                sf::RenderWindow&       m_window;
+        void                        displayEnrichedText(float x, float y);
+        void                        displayEnrichedText();
+        void                        displaySimpleText(const float x, const float y);
+        void                        displaySimpleText();
 
-                sf::Color               convertEnumColorToSfmlColor(TextColor colorNb);
-                void                    displayChar(float& x, const float y, const int charSize, const char printedChar);
+    private:
+        std::string                 m_string;
+        sf::Text                    m_text;
+        sf::Font                    m_font;
+        unsigned int                m_fontSize;
+        TextColor                   m_color;
+        TextColor                   m_outlineColor;
+        float                       m_outlineThickness;
+        sf::Vector2f                m_coords;
+        sf::RenderWindow&           m_window;
+
+        sf::Color                   convertEnumColorToSfmlColor(TextColor colorNb);
+        void                        displayChar(float& x, const float y, const int charSize, const char printedChar);
 };
 
 }

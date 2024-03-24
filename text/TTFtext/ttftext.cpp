@@ -1,102 +1,100 @@
-#include "ttftext.hpp"
-
-#include <iostream>
+#include "text/TTFtext/ttftext.hpp"
 
 namespace mylib
 {
 
-TTFtext::TTFtext(sf::RenderWindow& window): m_fontSize{15}, m_color{TextColor::White}, m_outlineColor{TextColor::White}, m_outlineThickness{0}, m_coords(0, 0), m_window{window}
+TTFText::TTFText(sf::RenderWindow& window):  m_window{window}
 {
-    m_text.setLineSpacing(0);
+
 }
 
-TTFtext::TTFtext(const std::string& text, const std::string& fontName, unsigned int fontSize, TextColor color, sf::RenderWindow& window) :  m_string{text}, m_fontSize{fontSize}, m_color{color}, m_outlineColor{TextColor::White},
+TTFText::TTFText(const std::string& text, const std::string& fontName, unsigned int fontSize, TextColor color, sf::RenderWindow& window) :  m_string{text}, m_fontSize{fontSize}, m_color{color}, m_outlineColor{TextColor::White},
                                                                                                                                             m_outlineThickness{0}, m_coords(0, 0), m_window{window}
 {
     m_font.loadFromFile(fontName);
     m_text.setFont(m_font);
 }
 
-bool TTFtext::setFont(const std::string& fontName)
+bool TTFText::setFont(const std::string& fontName)
 {
     bool fontOK = m_font.loadFromFile(fontName);
     m_text.setFont(m_font);
     return fontOK;
 }
 
-void TTFtext::setText(const std::string& text)
+void TTFText::setText(const std::string& text)
 {
     m_string = text;
 }
 
-void TTFtext::setCharacterSize(const unsigned int charSize)
+void TTFText::setCharacterSize(const unsigned int charSize)
 {
     m_text.setCharacterSize(charSize);
     m_fontSize = charSize;
 }
 
-void TTFtext::setColor(const TextColor color)
+void TTFText::setColor(const TextColor color)
 {
     m_text.setFillColor(convertEnumColorToSfmlColor(color));
     m_color = color;
 }
 
-void TTFtext::setOutlineColor(const TextColor color)
+void TTFText::setOutlineColor(const TextColor color)
 {
     m_text.setOutlineColor(convertEnumColorToSfmlColor(color));
     m_outlineColor = color;
 }
 
-void TTFtext::setOutlineTickness(float thickness)
+void TTFText::setOutlineTickness(float thickness)
 {
     m_text.setOutlineThickness(thickness);
     m_outlineThickness = thickness;
 }
 
-void TTFtext::setPosition(const float x, const float y)
+void TTFText::setPosition(const float x, const float y)
 {
     m_text.setPosition(x, y);
     m_coords.x = x;
     m_coords.y = y;
 }
 
-void TTFtext::setPosition(const sf::Vector2f& coords)
+void TTFText::setPosition(const sf::Vector2f& coords)
 {
     m_text.setPosition(coords);
     setPosition(coords.x, coords.y);
 }
 
-const std::string& TTFtext::getText() const
+const std::string& TTFText::getText() const
 {
     return m_string;
 }
 
-unsigned int TTFtext::getCharacterSize() const
+unsigned int TTFText::getCharacterSize() const
 {
     return m_fontSize;
 }
 
-mylib::TTFtext::TextColor TTFtext::getColor() const
+mylib::TTFText::TextColor TTFText::getColor() const
 {
     return m_color;
 }
 
-mylib::TTFtext::TextColor TTFtext::getOutlineColor() const
+mylib::TTFText::TextColor TTFText::getOutlineColor() const
 {
     return m_outlineColor;
 }
 
-float TTFtext::getOutlineTickness() const
+float TTFText::getOutlineTickness() const
 {
     return m_outlineThickness;
 }
 
-const sf::Vector2f TTFtext::getPosition() const
+const sf::Vector2f TTFText::getPosition() const
 {
     return m_coords;
 }
 
-void TTFtext::displayEnrichedText(float x, float y)
+void TTFText::displayEnrichedText(float x, float y)
 {
     float oldx = x;
     float oldY = y;
@@ -231,12 +229,24 @@ void TTFtext::displayEnrichedText(float x, float y)
     }
 }
 
-void TTFtext::displayEnrichedText()
+void TTFText::displayEnrichedText()
 {
     displayEnrichedText(m_coords.x, m_coords.y);
 }
 
-sf::Color TTFtext::convertEnumColorToSfmlColor(TextColor colorNb)
+void TTFText::displaySimpleText(const float x, const float y)
+{
+    m_text.setPosition(x, y);
+    m_text.setString(m_string);
+    m_window.draw(m_text);
+}
+
+void TTFText::displaySimpleText()
+{
+    displaySimpleText(m_coords.x, m_coords.y);
+}
+
+sf::Color TTFText::convertEnumColorToSfmlColor(TextColor colorNb)
 {
     switch (colorNb) {
         case TextColor::Black:                                                // 0
@@ -302,19 +312,7 @@ sf::Color TTFtext::convertEnumColorToSfmlColor(TextColor colorNb)
     return sf::Color::White;
 }
 
-void TTFtext::displaySimpleText(const float x, const float y)
-{
-    setPosition(x, y);
-    m_text.setString(m_string);
-    m_window.draw(m_text);
-}
-
-void TTFtext::displaySimpleText()
-{
-    displaySimpleText(m_coords.x, m_coords.y);
-}
-
-void TTFtext::displayChar(float& x, const float y, const int charSize, const char printedChar)
+void TTFText::displayChar(float& x, const float y, const int charSize, const char printedChar)
 {
     m_text.setString(printedChar);
     m_text.setPosition(x, y);
