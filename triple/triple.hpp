@@ -1,26 +1,28 @@
+#ifndef __TRIPLE__
+#define __TRIPLE__
+
 namespace mylib
 {
+
 template <typename T, typename U,typename V>
 class Triple
 {
+
    public:
         Triple();
         Triple(T first, U second, V third);
+        Triple(Triple<T, U, V>& triple);
+
+        void                                            swap(Triple<T, U, V>& triple1, Triple<T, U, V>& triple2);
 
         T first;
         U second;
         V third;
 };
-template <typename T, typename U,typename V>
-Triple<T, U, V>::Triple()
-{
+
+#include "triple.inl"
 
 }
 
-template <typename T, typename U,typename V>
-Triple<T, U, V>::Triple(T first, U second, V third) : first{first}, second{second}, third{third}
-{
+#endif // __TRIPLE__
 
-}
-
-}
